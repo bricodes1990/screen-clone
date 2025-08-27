@@ -1,29 +1,97 @@
-<header>
-  <h1>Classroom Screen Clone</h1>
-  <button id="themeToggle">🌙 Toggle Theme</button>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Classroom Screen Clone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 transition-colors duration-500">
 
-<main>
-  <!-- Timer Widget -->
-  <section class="widget">
-    <h2>Timer</h2>
-    <input type="number" id="minutes" placeholder="Minutes">
-    <button onclick="startTimer()">Start</button>
-    <button onclick="resetTimer()">Reset</button>
-    <p id="timerDisplay">00:00</p>
-  </section>
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-8">Classroom Screen Clone</h1>
 
-  <!-- Random Name Picker -->
-  <section class="widget">
-    <h2>Random Name Picker</h2>
-    <textarea id="nameList" placeholder="Enter names, one per line"></textarea>
-    <button onclick="pickName()">Pick Random Name</button>
-    <p id="pickedName"></p>
-  </section>
+    <!-- Theme Toggle -->
+    <div class="flex justify-center mb-6">
+      <button id="toggleTheme" class="px-4 py-2 rounded-lg bg-blue-500 text-white shadow hover:bg-blue-600">
+        Toggle Theme
+      </button>
+    </div>
 
-  <!-- Clock Widget -->
-  <section class="widget">
-    <h2>Clock</h2>
-    <p id="clockDisplay"></p>
-  </section>
-</main>
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Timer -->
+      <div class="p-6 bg-white rounded-2xl shadow text-center">
+        <h2 class="text-xl font-semibold mb-4">⏱ Timer</h2>
+        <input id="minutes" type="number" placeholder="Minutes"
+               class="border p-2 rounded mb-4 w-full">
+        <div class="space-x-2 mb-4">
+          <button id="startBtn" class="px-3 py-2 bg-green-500 text-white rounded shadow">Start</button>
+          <button id="resetBtn" class="px-3 py-2 bg-gray-400 text-white rounded shadow">Reset</button>
+        </div>
+        <div id="timerDisplay" class="text-2xl font-bold">00:00</div>
+      </div>
+
+      <!-- Random Name Picker -->
+      <div class="p-6 bg-white rounded-2xl shadow text-center">
+        <h2 class="text-xl font-semibold mb-4">🎲 Random Name Picker</h2>
+        <textarea id="nameList" placeholder="Enter names, one per line"
+                  class="border p-2 rounded mb-4 w-full"></textarea>
+        <button id="pickNameBtn" class="px-4 py-2 bg-purple-500 text-white rounded shadow">Pick Random Name</button>
+        <div id="pickedName" class="mt-4 text-2xl font-bold text-purple-700"></div>
+      </div>
+
+      <!-- Clock -->
+      <div class="p-6 bg-white rounded-2xl shadow text-center">
+        <h2 class="text-xl font-semibold mb-4">🕒 Clock</h2>
+        <div id="clock" class="text-3xl font-bold"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Timer
+    let timer, remaining;
+    document.getElementById("startBtn").onclick = () => {
+      let minutes = parseInt(document.getElementById("minutes").value) || 0;
+      remaining = minutes * 60;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        if (remaining <= 0) { clearInterval(timer); return; }
+        remaining--;
+        let m = String(Math.floor(remaining / 60)).padStart(2, '0');
+        let s = String(remaining % 60).padStart(2, '0');
+        document.getElementById("timerDisplay").textContent = `${m}:${s}`;
+      }, 1000);
+    };
+    document.getElementById("resetBtn").onclick = () => {
+      clearInterval(timer);
+      document.getElementById("timerDisplay").textContent = "00:00";
+    };
+
+    // Random Name Picker
+    document.getElementById("pickNameBtn").onclick = () => {
+      let names = document.getElementById("nameList").value.split("\n").filter(n => n.trim());
+      if (names.length > 0) {
+        let random = names[Math.floor(Math.random() * names.length)];
+        document.getElementById("pickedName").textContent = random;
+      }
+    };
+
+    // Clock
+    function updateClock() {
+      let now = new Date();
+      document.getElementById("clock").textContent =
+        now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Theme toggle
+    document.getElementById("toggleTheme").onclick = () => {
+      document.body.classList.toggle("bg-gray-900");
+      document.body.classList.toggle("text-white");
+    };
+  </script>
+</body>
+</html>
