@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Screen Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Classroom Screen Clone</h1>
+  </header>
+
+  <main>
+    <section class="widget">
+      <h2>Timer</h2>
+      <input type="number" id="minutes" placeholder="Minutes">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="resetTimer()">Reset</button>
+      <p id="timerDisplay">00:00</p>
+    </section>
+
+    <section class="widget">
+      <h2>Random Name Picker</h2>
+      <textarea id="nameList" placeholder="Enter names, one per line"></textarea>
+      <button onclick="pickName()">Pick Random Name</button>
+      <p id="pickedName"></p>
+    </section>
+
+    <section class="widget">
+      <h2>Text Box</h2>
+      <textarea id="textBox" placeholder="Type notes here..."></textarea>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
