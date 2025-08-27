@@ -1,37 +1,45 @@
-// ========== TIMER ==========
-let timerInterval;
-function startTimer() {
-  let minutes = document.getElementById("minutes").value;
-  let time = minutes * 60;
-  
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    let min = Math.floor(time / 60);
-    let sec = time % 60;
-    document.getElementById("timerDisplay").textContent =
-      `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-    
-    if (time <= 0) {
-      clearInterval(timerInterval);
-      alert("Time’s up!");
-    }
-    time--;
-  }, 1000);
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
-function resetTimer() {
-  clearInterval(timerInterval);
-  document.getElementById("timerDisplay").textContent = "00:00";
-  document.getElementById("minutes").value = "";
+:root {
+  --bg-color: #f4f4f9;
+  --text-color: #333;
+  --widget-bg: white;
 }
 
-// ========== RANDOM NAME PICKER ==========
-function pickName() {
-  let names = document.getElementById("nameList").value.split("\n").filter(n => n.trim() !== "");
-  if (names.length === 0) {
-    document.getElementById("pickedName").textContent = "Please enter some names.";
-    return;
-  }
-  let randomIndex = Math.floor(Math.random() * names.length);
-  document.getElementById("pickedName").textContent = "🎉 " + names[randomIndex];
+body.dark {
+  --bg-color: #1e1e1e;
+  --text-color: #eee;
+  --widget-bg: #2b2b2b;
+}
+
+header {
+  background: #4CAF50;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.widget {
+  background: var(--widget-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: background 0.3s ease;
 }
